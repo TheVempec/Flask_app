@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseumFinder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <div class="header-flex">
+            <a href="{{ url_for('index') }}" class="logo">🏛️ Museum<span>Finder</span></a>
+
+            <nav class="header-right">
+                <a href="{{ url_for('login') }}" class="btn-nav-text">Увійти</a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline">Зареєструватися</a>
+                <a href="{{ url_for('create_museum') }}" class="btn">Додати музей</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+
+</body>
+</html>

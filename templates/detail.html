@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="filter-panel" style="margin-top: 30px;">
+    <span class="museum-type">{{ museum.museum_type }}</span>
+    <h1 style="margin: 10px 0;">{{ museum.name }}</h1>
+    <p style="color: var(--accent); font-weight: bold;">Країна: {{ museum.country.name }}</p>
+
+    <p class="description" style="line-height: 1.6; margin: 20px 0;">{{ museum.description or 'Опис відсутній.' }}</p>
+
+    <div style="display: flex; gap: 15px; margin-top: 30px; align-items: center;">
+        <a href="{{ museum.site_url }}" target="_blank" class="btn" style="padding: 12px 30px;">Перейти на офіційний сайт музею ↗</a>
+        <a href="{{ url_for('edit_museum', museum_id=museum.id) }}" class="btn btn-outline">Редагувати</a>
+
+        <form action="{{ url_for('delete_museum', museum_id=museum.id) }}" method="POST" onsubmit="return confirm('Видалити цей музей з каталогу?');">
+            <button type="submit" class="btn btn-danger">Видалити</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

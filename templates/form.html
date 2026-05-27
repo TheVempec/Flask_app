@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ action }} museum у каталог</h2>
+
+<form method="POST" style="background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 20px;">
+
+    <div class="filter-group">
+        <label>Назва музею:</label>
+        <input type="text" name="name" value="{{ museum.name if museum else '' }}" required>
+    </div>
+
+    <div class="filter-group" style="background: #1e1b4b; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent);">
+        <label>Оберіть категорію музею:</label>
+        <select name="category_id">
+            <option value="" disabled {% if not museum %}selected{% endif %}>Оберіть категорію...</option>
+            {% for c in categories %}
+                <option value="{{ c.id }}" {% if museum and museum.category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+
+        <p style="text-align: center; margin: 5px 0; color: var(--text-muted); font-size: 0.9rem;">АБО</p>
+
+        <label>Створіть нову категорію (Транзакція):</label>
+        <input type="text" name="new_category" placeholder="Наприклад: Військовий або Інтерактивний">
+        <small style="color: var(--text-muted); display: block; margin-top: 5px; font-size: 0.8rem;">
+            Якщо заповнити це поле, обрана вище категорія проігнорується застосунком.
+        </small>
+    </div>
+
+    <div class="filter-group" style="background: #1e1b4b; padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent);">
+        <label>Оберіть існуючу країну:</label>
+        <select name="country_id">
+            <option value="" disabled {% if not museum %}selected{% endif %}>Оберіть країну...</option>
+            {% for c in countries %}
+                <option value="{{ c.id }}" {% if museum and museum.country_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+
+        <p style="text-align: center; margin: 5px 0; color: var(--text-muted); font-size: 0.9rem;">АБО</p>
+
+        <label>Додайте нову країну (Транзакція):</label>
+        <input type="text" name="new_country" id="new_country" placeholder="Наприклад: Швеція">
+        <small style="color: var(--text-muted); display: block; margin-top: 5px; font-size: 0.8rem;">
+            Якщо заповнити це поле, обрана вище країна проігнорується застосунком.
+        </small>
+    </div>
+
+    <div class="filter-group">
+        <label>Посилання на офіційний сайт музею:</label>
+        <input type="url" name="site_url" value="{{ museum.site_url if museum else '' }}" placeholder="https://example.com" required>
+    </div>
+
+    <div class="filter-group">
+        <label>Посилання на зображення музею (URL):</label>
+        <input type="url" name="image_url" value="{{ museum.image_url if museum else '' }}" placeholder="https://example.com/image.jpg">
+    </div>
+
+    <div class="filter-group">
+        <label>Короткий опис:</label>
+        <textarea name="description" rows="5">{{ museum.description if museum else '' }}</textarea>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+        <button type="submit" class="btn">{{ action }}</button>
+        <a href="{{ url_for('index') }}" class="btn btn-outline">Скасувати</a>
+    </div>
+
+</form>
+{% endblock %}
